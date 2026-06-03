@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Superhéroe CSS</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: linear-gradient(180deg, #0a0015 0%, #1a0030 40%, #0d0020 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    /* ── Estrellas de fondo ── */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    @keyframes twinkle {
+      from { opacity: .2; transform: scale(1); }
+      to   { opacity: 1;  transform: scale(1.4); }
+    }
+
+    /* ── Ciudad de fondo ── */
+    .city {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 180px;
+      display: flex;
+      align-items: flex-end;
+      gap: 4px;
+      padding: 0 20px;
+    }
+
+    .building {
+      background: linear-gradient(180deg, #1a0a3a, #0d0020);
+      border: 1px solid rgba(124,58,237,.2);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .building::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 10px,
+        rgba(249,115,22,.08) 10px,
+        rgba(249,115,22,.08) 11px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 12px,
+        rgba(249,115,22,.08) 12px,
+        rgba(249,115,22,.08) 13px
+      );
+    }
+
+    /* ── Nube ── */
+    .cloud {
+      position: fixed;
+      background: rgba(124,58,237,.12);
+      border-radius: 50px;
+      filter: blur(8px);
+    }
+
+    .cloud-1 { width: 200px; height: 60px; top: 20%; animation: float-cloud 18s linear infinite; }
+    .cloud-2 { width: 140px; height: 40px; top: 35%; animation: float-cloud 25s linear infinite reverse; opacity: .6; }
+    .cloud-3 { width: 260px; height: 70px; top: 12%; animation: float-cloud 30s linear infinite; opacity: .4; }
+
+    @keyframes float-cloud {
+      from { left: -300px; }
+      to   { left: 110%; }
+    }
+
+    /* ── Escena ── */
+    .scene {
+      position: relative;
+      width: 700px;
+      height: 400px;
+    }
+
+    /* ── Superhéroe ── */
+    .hero-wrap {
+      position: absolute;
+      top: 50%;
+      left: -120px;
+      transform: translateY(-50%);
+      animation: fly-across 4s cubic-bezier(0.4, 0, 0.2, 1) forwards,
+                 hover 2s ease-in-out 4s infinite alternate;
+    }
+
+    @keyframes fly-across {
+      0%   { left: -120px; top: 70%; }
+      60%  { left: 50%;    top: 40%; }
+      100% { left: 46%;    top: 38%; transform: translateY(-50%) scaleX(1); }
+    }
+
+    @keyframes hover {
+      from { top: 38%; }
+      to   { top: 42%; }
+    }
+
+    .hero {
+      position: relative;
+      width: 80px;
+      height: 100px;
+      animation: tilt 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes tilt {
+      0%   { transform: rotate(-30deg) scaleX(-1); }
+      60%  { transform: rotate(-15deg) scaleX(-1); }
+      100% { transform: rotate(0deg)   scaleX(-1); }
+    }
+
+    /* Cabeza */
+    .head {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 34px; height: 34px;
+      background: radial-gradient(circle at 40% 35%, #f5c5a3, #d4936b);
+      border-radius: 50% 50% 45% 45%;
+      z-index: 3;
+    }
+
+    /* Máscara */
+    .mask {
+      position: absolute;
+      top: 4px; left: 50%;
+      transform: translateX(-50%);
+      width: 34px; height: 18px;
+      background: #7c3aed;
+      border-radius: 50% 50% 0 0;
+      z-index: 4;
+      overflow: hidden;
+    }
+
+    .mask::before, .mask::after {
+      content: '';
+      position: absolute;
+      top: 8px;
+      width: 10px; height: 6px;
+      background: #fff;
+      border-radius: 50%;
+    }
+
+    .mask::before { left: 4px; }
+    .mask::after  { right: 4px; }
+
+    /* Orejas de máscara */
+    .ears::before, .ears::after {
+      content: '';
+      position: absolute;
+      top: -4px;
+      width: 0; height: 0;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      border-bottom: 10px solid #7c3aed;
+      z-index: 5;
+    }
+
+    .ears::before { left: 8px; }
+    .ears::after  { right: 8px; }
+
+    /* Cuerpo */
+    .body {
+      position: absolute;
+      top: 28px; left: 50%;
+      transform: translateX(-50%);
+      width: 36px; height: 42px;
+      background: linear-gradient(135deg, #7c3aed, #5b21b6);
+      border-radius: 6px 6px 4px 4px;
+      z-index: 2;
+    }
+
+    /* Símbolo en el pecho */
+    .body::before {
+      content: '⚡';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 16px;
+      filter: drop-shadow(0 0 6px #f97316);
+    }
+
+    /* Capa */
+    .cape {
+      position: absolute;
+      top: 30px; left: 50%;
+      transform: translateX(-50%);
+      width: 50px; height: 55px;
+      background: linear-gradient(160deg, #f97316, #c2410c);
+      border-radius: 0 0 60% 60%;
+      z-index: 1;
+      transform-origin: top center;
+      animation: cape-flap 0.4s ease-in-out infinite alternate;
+    }
+
+    @keyframes cape-flap {
+      from { transform: translateX(-50%) skewX(-8deg) scaleY(1); }
+      to   { transform: translateX(-50%) skewX(8deg)  scaleY(.92); }
+    }
+
+    /* Brazos */
+    .arm-left, .arm-right {
+      position: absolute;
+      top: 34px;
+      width: 12px; height: 30px;
+      background: linear-gradient(180deg, #7c3aed, #5b21b6);
+      border-radius: 6px;
+      z-index: 3;
+    }
+
+    .arm-left  { left: 8px;  transform: rotate(35deg); }
+    .arm-right { right: 8px; transform: rotate(-35deg); }
+
+    /* Piernas */
+    .leg-left, .leg-right {
+      position: absolute;
+      top: 66px;
+      width: 14px; height: 32px;
+      background: linear-gradient(180deg, #4c1d95, #3b0764);
+      border-radius: 4px 4px 6px 6px;
+      z-index: 2;
+    }
+
+    .leg-left  { left: 14px; transform: rotate(8deg); }
+    .leg-right { right: 14px; transform: rotate(-8deg); }
+
+    /* Botas */
+    .leg-left::after, .leg-right::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: -2px;
+      width: 18px; height: 10px;
+      background: #1e1b4b;
+      border-radius: 4px 4px 6px 6px;
+    }
+
+    /* ── Estela de vuelo ── */
+    .trail {
+      position: absolute;
+      top: 50%; left: -120px;
+      width: 0; height: 6px;
+      transform: translateY(-50%);
+      background: linear-gradient(90deg, transparent, rgba(124,58,237,.6), rgba(249,115,22,.8));
+      border-radius: 0 3px 3px 0;
+      animation: trail-grow 4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      filter: blur(2px);
+    }
+
+    @keyframes trail-grow {
+      0%   { left: -120px; width: 0;    opacity: 1; }
+      60%  { left: -120px; width: 480px; opacity: 1; }
+      100% { left: -120px; width: 520px; opacity: 0; }
+    }
+
+    /* Partículas de la estela */
+    .particle {
+      position: absolute;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #f97316;
+      animation: particle-fly 4s ease-out forwards;
+      opacity: 0;
+    }
+
+    @keyframes particle-fly {
+      0%   { opacity: 0; }
+      20%  { opacity: 1; }
+      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0); }
+    }
+
+    /* ── Destello de llegada ── */
+    .burst {
+      position: absolute;
+      top: 38%; left: 46%;
+      transform: translate(-50%, -50%);
+      width: 0; height: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,115,22,.8), rgba(124,58,237,.4), transparent 70%);
+      animation: burst 0.5s ease-out 3.8s forwards;
+      opacity: 0;
+    }
+
+    @keyframes burst {
+      0%   { width: 0;     height: 0;     opacity: 1; }
+      100% { width: 200px; height: 200px; opacity: 0; margin: -100px 0 0 -100px; }
+    }
+
+    /* ── Texto ── */
+    .title {
+      position: absolute;
+      bottom: 20px; left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      opacity: 0;
+      animation: fade-in 1s ease-out 4.5s forwards;
+    }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    .title h1 {
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(135deg, #7c3aed, #a855f7, #f97316);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+
+    .title p {
+      font-size: 13px;
+      color: rgba(160,156,192,.7);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── Brillo del héroe ── */
+    .glow {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80px; height: 80px;
+      background: radial-gradient(circle, rgba(124,58,237,.6), transparent 70%);
+      border-radius: 50%;
+      animation: pulse-glow 2s ease-in-out 4s infinite alternate;
+      opacity: 0;
+    }
+
+    @keyframes pulse-glow {
+      from { opacity: .4; transform: translate(-50%, -50%) scale(1); }
+      to   { opacity: .8; transform: translate(-50%, -50%) scale(1.4); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Estrellas -->
+  <div class="stars" id="stars"></div>
+
+  <!-- Nubes -->
+  <div class="cloud cloud-1"></div>
+  <div class="cloud cloud-2"></div>
+  <div class="cloud cloud-3"></div>
+
+  <!-- Ciudad -->
+  <div class="city" id="city"></div>
+
+  <!-- Escena principal -->
+  <div class="scene">
+
+    <!-- Estela -->
+    <div class="trail"></div>
+
+    <!-- Partículas -->
+    <div id="particles"></div>
+
+    <!-- Destello -->
+    <div class="burst"></div>
+
+    <!-- Superhéroe -->
+    <div class="hero-wrap">
+      <div class="glow"></div>
+      <div class="hero">
+        <div class="head">
+          <div class="mask"><div class="ears"></div></div>
+        </div>
+        <div class="cape"></div>
+        <div class="body"></div>
+        <div class="arm-left"></div>
+        <div class="arm-right"></div>
+        <div class="leg-left"></div>
+        <div class="leg-right"></div>
+      </div>
+    </div>
+
+    <!-- Título -->
+    <div class="title">
+      <h1>Claude Hero</h1>
+      <p>El asistente que vuela a tu lado</p>
+    </div>
+
+  </div>
+
+  <script>
+    // Generar estrellas
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 120; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() * 2.5 + 0.5;
+      s.style.cssText = `
+        width:${size}px; height:${size}px;
+        top:${Math.random()*100}%;
+        left:${Math.random()*100}%;
+        animation-delay:${Math.random()*3}s;
+        animation-duration:${1.5+Math.random()*2}s;
+      `;
+      starsEl.appendChild(s);
+    }
+
+    // Generar ciudad
+    const cityEl = document.getElementById('city');
+    const widths  = [30,40,25,50,35,45,28,38,32,42,22,48,36];
+    const heights = [80,140,100,160,120,90,150,110,130,85,145,95,125];
+    for (let i = 0; i < 28; i++) {
+      const b = document.createElement('div');
+      b.className = 'building';
+      b.style.width  = widths[i % widths.length] + 'px';
+      b.style.height = heights[i % heights.length] + 'px';
+      cityEl.appendChild(b);
+    }
+
+    // Generar partículas de estela
+    const partEl = document.getElementById('particles');
+    for (let i = 0; i < 20; i++) {
+      const p = document.createElement('div');
+      p.className = 'particle';
+      p.style.cssText = `
+        top:${48 + (Math.random()-0.5)*20}%;
+        left:${10 + Math.random()*50}%;
+        --dx:${(Math.random()-0.5)*60}px;
+        --dy:${(Math.random()-0.5)*60}px;
+        animation-delay:${0.5 + Math.random()*2.5}s;
+        background: ${Math.random() > 0.5 ? '#f97316' : '#a855f7'};
+        width:${3+Math.random()*5}px;
+        height:${3+Math.random()*5}px;
+      `;
+      partEl.appendChild(p);
+    }
+  </script>
+
+</body>
+</html>
