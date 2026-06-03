@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Claude AI Pro Max — El asistente de inteligencia artificial más avanzado para profesionales." />
+  <title>Claude AI Pro Max</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="design-tokens.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text-primary);
+      line-height: var(--leading-normal);
+      min-height: 100vh;
+    }
+
+    /* ── Navbar ── */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-8);
+      background: rgba(8,6,19,.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--color-border);
+      z-index: var(--z-nav);
+    }
+
+    .nav-logo {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-bold);
+      background: var(--gradient-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-8);
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      font-weight: var(--font-weight-medium);
+      transition: color var(--duration-fast) var(--ease-out);
+    }
+
+    .nav-links a:hover { color: var(--color-text-primary); }
+
+    .nav-cta {
+      background: var(--gradient-brand);
+      color: #fff !important;
+      padding: var(--space-2) var(--space-6);
+      border-radius: var(--radius-full);
+      font-weight: var(--font-weight-semibold) !important;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: calc(var(--nav-height) + var(--space-16)) var(--space-6) var(--space-24);
+      position: relative;
+      overflow: hidden;
+      background: var(--gradient-surface);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-glow);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-4);
+      background: rgba(124,58,237,.15);
+      border: 1px solid rgba(124,58,237,.3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-sm);
+      color: var(--color-brand-purple-light);
+      margin-bottom: var(--space-8);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .hero-title {
+      font-size: clamp(var(--text-4xl), 8vw, var(--text-7xl));
+      font-weight: var(--font-weight-extrabold);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tight);
+      max-width: 900px;
+      margin-bottom: var(--space-6);
+    }
+
+    .hero-title .gradient-text {
+      background: var(--gradient-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(var(--text-lg), 2.5vw, var(--text-2xl));
+      color: var(--color-text-secondary);
+      max-width: 600px;
+      margin-bottom: var(--space-12);
+      line-height: var(--leading-relaxed);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: var(--space-4);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    /* ── Buttons ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-4) var(--space-8);
+      border-radius: var(--radius-full);
+      font-size: var(--text-base);
+      font-weight: var(--font-weight-semibold);
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: transform var(--duration-fast) var(--ease-spring),
+                  box-shadow var(--duration-normal) var(--ease-out);
+    }
+
+    .btn:hover { transform: translateY(-2px); }
+
+    .btn-primary {
+      background: var(--gradient-brand);
+      color: #fff;
+      box-shadow: var(--shadow-glow);
+    }
+
+    .btn-primary:hover { box-shadow: var(--shadow-glow), var(--shadow-lg); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-text-primary);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--color-border-hover);
+      background: var(--color-surface-hover);
+    }
+
+    /* ── Section Commons ── */
+    .section {
+      padding: var(--space-24) var(--space-6);
+      max-width: var(--container-xl);
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: var(--text-sm);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-brand-purple-light);
+      margin-bottom: var(--space-4);
+    }
+
+    .section-title {
+      font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+      font-weight: var(--font-weight-bold);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tight);
+      margin-bottom: var(--space-6);
+    }
+
+    .section-desc {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      max-width: 560px;
+      line-height: var(--leading-relaxed);
+    }
+
+    /* ── Features ── */
+    .features { background: var(--color-bg-elevated); }
+
+    .features-inner {
+      max-width: var(--container-xl);
+      margin: 0 auto;
+      padding: var(--space-24) var(--space-6);
+    }
+
+    .features-header { margin-bottom: var(--space-16); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .feature-card {
+      background: var(--gradient-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-8);
+      transition: border-color var(--duration-normal) var(--ease-out),
+                  box-shadow var(--duration-normal) var(--ease-out),
+                  transform var(--duration-normal) var(--ease-spring);
+    }
+
+    .feature-card:hover {
+      border-color: var(--color-border-hover);
+      box-shadow: var(--shadow-card);
+      transform: translateY(-4px);
+    }
+
+    .feature-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(124,58,237,.15);
+      border: 1px solid rgba(124,58,237,.25);
+      border-radius: var(--radius-lg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-2xl);
+      margin-bottom: var(--space-6);
+    }
+
+    .feature-title {
+      font-size: var(--text-xl);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-3);
+    }
+
+    .feature-desc {
+      font-size: var(--text-base);
+      color: var(--color-text-secondary);
+      line-height: var(--leading-relaxed);
+    }
+
+    /* ── Pricing ── */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-16);
+    }
+
+    .pricing-card {
+      background: var(--color-bg-card);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-2xl);
+      padding: var(--space-10);
+      position: relative;
+    }
+
+    .pricing-card.featured {
+      border-color: rgba(124,58,237,.5);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--gradient-brand);
+      color: #fff;
+      font-size: var(--text-xs);
+      font-weight: var(--font-weight-bold);
+      letter-spacing: var(--tracking-wide);
+      text-transform: uppercase;
+      padding: var(--space-1) var(--space-4);
+      border-radius: var(--radius-full);
+    }
+
+    .pricing-plan {
+      font-size: var(--text-sm);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: var(--tracking-wider);
+      text-transform: uppercase;
+      color: var(--color-brand-purple-light);
+      margin-bottom: var(--space-4);
+    }
+
+    .pricing-price {
+      font-size: var(--text-5xl);
+      font-weight: var(--font-weight-extrabold);
+      line-height: 1;
+      margin-bottom: var(--space-2);
+    }
+
+    .pricing-price span {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-normal);
+      color: var(--color-text-secondary);
+    }
+
+    .pricing-desc {
+      color: var(--color-text-secondary);
+      font-size: var(--text-sm);
+      margin-bottom: var(--space-8);
+    }
+
+    .pricing-features {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-3);
+      margin-bottom: var(--space-8);
+    }
+
+    .pricing-features li {
+      font-size: var(--text-sm);
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .pricing-features li::before {
+      content: '✓';
+      color: var(--color-brand-purple-light);
+      font-weight: var(--font-weight-bold);
+      flex-shrink: 0;
+    }
+
+    /* ── CTA ── */
+    .cta {
+      text-align: center;
+      padding: var(--space-24) var(--space-6);
+      background: var(--gradient-surface);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-glow);
+      opacity: .5;
+      pointer-events: none;
+    }
+
+    .cta-inner { position: relative; z-index: 1; max-width: var(--container-md); margin: 0 auto; }
+
+    .cta-title {
+      font-size: clamp(var(--text-3xl), 5vw, var(--text-5xl));
+      font-weight: var(--font-weight-extrabold);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-tight);
+      margin-bottom: var(--space-6);
+    }
+
+    .cta-desc {
+      font-size: var(--text-lg);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-10);
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--color-border);
+      padding: var(--space-12) var(--space-8);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: var(--space-4);
+      max-width: var(--container-2xl);
+      margin: 0 auto;
+    }
+
+    .footer-logo {
+      font-size: var(--text-lg);
+      font-weight: var(--font-weight-bold);
+      background: var(--gradient-brand);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: var(--space-6);
+      list-style: none;
+    }
+
+    .footer-links a {
+      color: var(--color-text-muted);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      transition: color var(--duration-fast);
+    }
+
+    .footer-links a:hover { color: var(--color-text-primary); }
+
+    .footer-copy {
+      color: var(--color-text-muted);
+      font-size: var(--text-sm);
+    }
+
+    /* ── Code snippet ── */
+    .code-block {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      background: rgba(0,0,0,.4);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4) var(--space-6);
+      color: var(--color-brand-purple-light);
+      margin-top: var(--space-8);
+      display: inline-block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="nav" role="navigation" aria-label="Navegación principal">
+    <span class="nav-logo">Claude AI</span>
+    <ul class="nav-links">
+      <li><a href="#features">Características</a></li>
+      <li><a href="#pricing">Precios</a></li>
+      <li><a href="#cta" class="nav-cta">Empezar gratis</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-badge">✦ Ahora disponible: Claude AI Pro Max</div>
+    <h1 class="hero-title" id="hero-heading">
+      La IA que <span class="gradient-text">piensa contigo</span>,<br />no por ti
+    </h1>
+    <p class="hero-subtitle">
+      Potencia tu productividad con el asistente de inteligencia artificial más avanzado.
+      Código, análisis, escritura y más — todo en un solo lugar.
+    </p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn btn-primary">Comenzar gratis →</a>
+      <a href="#features" class="btn btn-outline">Ver características</a>
+    </div>
+    <div class="code-block">$ claude "¿Cómo puedo ayudarte hoy?"</div>
+  </section>
+
+  <!-- Features -->
+  <section class="features" id="features" aria-labelledby="features-heading">
+    <div class="features-inner">
+      <div class="features-header">
+        <p class="section-label">Capacidades</p>
+        <h2 class="section-title" id="features-heading">Todo lo que necesitas,<br />en un solo asistente</h2>
+        <p class="section-desc">Desde generación de código hasta análisis de datos complejos, Claude está diseñado para profesionales exigentes.</p>
+      </div>
+      <div class="features-grid">
+        <article class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3 class="feature-title">Código Inteligente</h3>
+          <p class="feature-desc">Genera, revisa y depura código en más de 30 lenguajes de programación con explicaciones detalladas.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🧠</div>
+          <h3 class="feature-title">Razonamiento Avanzado</h3>
+          <p class="feature-desc">Analiza problemas complejos paso a paso con un razonamiento profundo y estructurado.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">✍️</div>
+          <h3 class="feature-title">Escritura Profesional</h3>
+          <p class="feature-desc">Redacta informes, emails y contenido de alta calidad adaptado a tu voz y estilo.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3 class="feature-title">Análisis de Datos</h3>
+          <p class="feature-desc">Interpreta datasets, genera insights y visualiza tendencias con lenguaje natural.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3 class="feature-title">Privacidad Total</h3>
+          <p class="feature-desc">Tus conversaciones son privadas. Nunca usamos tus datos para entrenar modelos sin tu consentimiento.</p>
+        </article>
+        <article class="feature-card">
+          <div class="feature-icon">🌐</div>
+          <h3 class="feature-title">Multilingüe</h3>
+          <p class="feature-desc">Trabaja en español, inglés y más de 50 idiomas con fluidez y precisión nativa.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section" id="pricing" aria-labelledby="pricing-heading">
+    <p class="section-label">Planes</p>
+    <h2 class="section-title" id="pricing-heading">Elige tu plan</h2>
+    <p class="section-desc">Sin sorpresas. Cancela cuando quieras.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <p class="pricing-plan">Free</p>
+        <div class="pricing-price">$0 <span>/ mes</span></div>
+        <p class="pricing-desc">Para explorar las capacidades de Claude.</p>
+        <ul class="pricing-features">
+          <li>100 mensajes al día</li>
+          <li>Acceso al modelo base</li>
+          <li>Soporte por email</li>
+        </ul>
+        <a href="#cta" class="btn btn-outline" style="width:100%;justify-content:center;">Empezar gratis</a>
+      </div>
+      <div class="pricing-card featured">
+        <span class="pricing-badge">Más popular</span>
+        <p class="pricing-plan">Pro</p>
+        <div class="pricing-price">$20 <span>/ mes</span></div>
+        <p class="pricing-desc">Para profesionales que necesitan más potencia.</p>
+        <ul class="pricing-features">
+          <li>Mensajes ilimitados</li>
+          <li>Acceso prioritario a Claude Pro Max</li>
+          <li>Soporte prioritario 24/7</li>
+          <li>API incluida (100K tokens/mes)</li>
+        </ul>
+        <a href="#cta" class="btn btn-primary" style="width:100%;justify-content:center;">Suscribirse →</a>
+      </div>
+      <div class="pricing-card">
+        <p class="pricing-plan">Enterprise</p>
+        <div class="pricing-price">Custom</div>
+        <p class="pricing-desc">Para equipos y organizaciones con necesidades avanzadas.</p>
+        <ul class="pricing-features">
+          <li>Todo lo de Pro</li>
+          <li>SSO y administración de equipo</li>
+          <li>SLA garantizado</li>
+          <li>Integración personalizada</li>
+        </ul>
+        <a href="#cta" class="btn btn-outline" style="width:100%;justify-content:center;">Contactar ventas</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="cta" aria-labelledby="cta-heading">
+    <div class="cta-inner">
+      <h2 class="cta-title" id="cta-heading">
+        Empieza a trabajar más<br /><span style="background:var(--gradient-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">inteligente hoy</span>
+      </h2>
+      <p class="cta-desc">Únete a miles de profesionales que ya usan Claude AI para multiplicar su productividad.</p>
+      <div class="hero-actions">
+        <a href="#" class="btn btn-primary">Crear cuenta gratis →</a>
+        <a href="#features" class="btn btn-outline">Ver demostración</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <span class="footer-logo">Claude AI</span>
+    <ul class="footer-links">
+      <li><a href="#">Privacidad</a></li>
+      <li><a href="#">Términos</a></li>
+      <li><a href="#">Documentación</a></li>
+      <li><a href="#">Contacto</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Anthropic. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>
